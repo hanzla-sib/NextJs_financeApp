@@ -1,4 +1,6 @@
 import PageHeader from "@/components/page-header";
+import TransactionItem from "@/components/transaction-item";
+import TransactionSummaryItem from "@/components/transaction-summary-item";
 import Trend from "@/components/trend";
 
 const page = () => {
@@ -15,11 +17,69 @@ const page = () => {
       <div>
         <h2 className="mb-4 text-lg font-mono">Trend</h2>
         <hr className="mb-4 border-gray-200 dark:border-gray-800" />
-        <div className="flex space-x-4">
-          <Trend type="Income" amount={1000} />
-          <Trend type="Expense" amount={1000} />
-          <Trend type="Investment" amount={1000} />
-          <Trend type="Saving" amount={1000} />
+        <div className="flex space-x-4 justify-between">
+          <Trend type="Income" amount={1000} prevAmount={900} />
+          <Trend type="Expense" amount={12000} prevAmount={10000} />
+          <Trend type="Investment" amount={7000} prevAmount={1110} />
+          <Trend type="Saving" amount={500} prevAmount={950} />
+        </div>
+      </div>
+      <div>
+        <h2 className="mb-4 text-lg font-mono">TransactionItem</h2>
+        <hr className="mb-4 border-gray-200 dark:border-gray-800" />
+        <div className="space-y-4">
+          <TransactionItem
+            type={"Income"}
+            description={"salary"}
+            amount={2000}
+          />
+          <TransactionItem
+            type={"Income"}
+            category={"Food"}
+            description={"going out to eat"}
+            amount={29}
+          />
+          <TransactionItem
+            type={"Saving"}
+            description={"For Education"}
+            amount={600}
+          />
+          <TransactionItem
+            type={"Investment"}
+            description={"In Microsoft"}
+            amount={9000}
+          />
+        </div>
+      </div>
+      <div>
+        <h2 className="mb-4 text-lg font-mono">
+          Transaction Summary Item + TransactionItem
+        </h2>
+        <hr className="mb-4 border-gray-200 dark:border-gray-800" />
+        <div className="space-y-4">
+          <TransactionSummaryItem date={"2024-05-01"} amount={3500} />
+          <hr className="mb-4 border-gray-200 dark:border-gray-800" />
+          <TransactionItem
+            type={"Income"}
+            description={"salary"}
+            amount={2000}
+          />
+          <TransactionItem
+            type={"Income"}
+            category={"Food"}
+            description={"going out to eat"}
+            amount={29}
+          />
+          <TransactionItem
+            type={"Saving"}
+            description={"For Education"}
+            amount={600}
+          />
+          <TransactionItem
+            type={"Investment"}
+            description={"In Microsoft"}
+            amount={9000}
+          />
         </div>
       </div>
     </main>

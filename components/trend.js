@@ -1,5 +1,7 @@
+import { useMemo } from "react";
 import { twMerge } from "tailwind-merge";
-
+import { ArrowDownLeft, ArrowUpRight } from "lucide-react";
+import { useFormatCurrency } from "@/hooks/use-format-currency";
 const Trend = ({ type, amount, prevAmount }) => {
   const colorClasses = {
     Income: "text-green-700 dark:text-green-300",
@@ -8,25 +10,32 @@ const Trend = ({ type, amount, prevAmount }) => {
     Saving: "text-yellow-700 dark:text-yellow-300",
   };
   const calcPercentageChange = (amount, prevAmount) => {
-    if (prevAmount === 0) {
+    if (!prevAmount || !amount === 0) {
       return 0;
     }
     return ((amount - prevAmount) / prevAmount) * 100;
   };
 
-  const formatCurrency = (amount) => {
-    console.log("amount ", amount);
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "EUR",
-    }).format(amount);
-  };
+  const percentagechange = useMemo(
+    () => calcPercentageChange(amount, prevAmount),
+    [amount, prevAmount]
+  );
+  const formattedAmount = useFormatCurrency(amount);
 
   return (
     <div>
-      <div className={twMerge("font-semibold",colorClasses[type])}>{type}</div>
+      <div className={twMerge("font-semibold", colorClasses[type])}>{type}</div>
       <div className="text-2xl font-semibold text-black dark:text-white mb-2">
-        {amount ? formatCurrency(amount) : formatCurrency(0)}
+        {formattedAmount}
+      </div>
+      <div classNameflex space-x-1 items-center text-sm>
+        {percentagechange <= 0 && (
+          <ArrowDownLeft className="text-red-700 dark:text-red-300" />
+        )}
+        {percentagechange > 0 && (
+          <ArrowUpRight className="text-green-700 dark:text-green-300" />
+        )}
+        <div>{percentagechange}% vs last period</div>
       </div>
     </div>
   );
