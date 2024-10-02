@@ -44,5 +44,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 # react-cookie
 # tailwind-merge
    
-# Skelton for loader
+# Skelton for loader with suspense and fallback
    
