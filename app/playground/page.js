@@ -3,6 +3,8 @@ import Input from "@/components/input";
 import Label from "@/components/label";
 import PageHeader from "@/components/page-header";
 import Select from "@/components/select";
+import Seperator from "@/components/seperator";
+import Skeleton from "@/components/skeleton";
 import TransactionItem from "@/components/transaction-item";
 import TransactionSummaryItem from "@/components/transaction-summary-item";
 import Trend from "@/components/trend";
@@ -13,14 +15,14 @@ const page = () => {
       <h1 className="text-4xl mt-8">Playground</h1>
       <div>
         <h2 className="mb-4 text-lg font-mono">PageHeader</h2>
-        <hr className="mb-4 border-gray-200 dark:border-gray-800" />
+        <Seperator />
         <div>
           <PageHeader />
         </div>
       </div>
       <div>
         <h2 className="mb-4 text-lg font-mono">Trend</h2>
-        <hr className="mb-4 border-gray-200 dark:border-gray-800" />
+        <Seperator />
         <div className="flex space-x-4 justify-between">
           <Trend type="Income" amount={1000} prevAmount={900} />
           <Trend type="Expense" amount={12000} prevAmount={10000} />
@@ -30,7 +32,7 @@ const page = () => {
       </div>
       <div>
         <h2 className="mb-4 text-lg font-mono">TransactionItem</h2>
-        <hr className="mb-4 border-gray-200 dark:border-gray-800" />
+        <Seperator />
         <div className="space-y-4">
           <TransactionItem
             type={"Income"}
@@ -59,10 +61,10 @@ const page = () => {
         <h2 className="mb-4 text-lg font-mono">
           Transaction Summary Item + TransactionItem
         </h2>
-        <hr className="mb-4 border-gray-200 dark:border-gray-800" />
+        <Seperator />
         <div className="space-y-4">
           <TransactionSummaryItem date={"2024-05-01"} amount={3500} />
-          <hr className="mb-4 border-gray-200 dark:border-gray-800" />
+          <Seperator />
           <TransactionItem
             type={"Income"}
             description={"salary"}
@@ -89,7 +91,7 @@ const page = () => {
 
       <div>
         <h2 className="mb-4 text-lg font-mono">Buttons</h2>
-        <hr className="mb-4 border-gray-200 dark:border-gray-800" />
+        <Seperator />
         <div className="space-y-8 space-x-2 mb-4">
           <Button>Hello</Button>
           <Button variant="outline">Hello</Button>
@@ -103,7 +105,7 @@ const page = () => {
 
       <div>
         <h2 className="mb-4 text-lg font-mono">Forms </h2>
-        <hr className="mb-4 border-gray-200 dark:border-gray-800" />
+        <Seperator />
         <div className="grid grid-cols-2 gap-2">
           <div>
             <Label htmlFor="id_name">Your Name</Label>
@@ -122,6 +124,23 @@ const page = () => {
             <Label className="ml-2 " htmlFor="terms">
               Accept Terms
             </Label>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h2 className="mb-4 text-lg font-mono">Loading Skeleton </h2>
+        <Seperator />
+        <div className="space-y-8">
+          <div className="flex space-x-4">
+            <Skeleton />
+            <Skeleton />
+            <Skeleton />
+          </div>
+          <div className="space-y-4">
+            <Skeleton />
+            <Skeleton />
+            <Skeleton />
           </div>
         </div>
       </div>

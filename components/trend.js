@@ -28,7 +28,7 @@ const Trend = ({ type, amount, prevAmount }) => {
       <div className="text-2xl font-semibold text-black dark:text-white mb-2">
         {formattedAmount}
       </div>
-      <div classNameflex space-x-1 items-center text-sm>
+      <div className="flex space-x-1 items-center text-sm" >
         {percentagechange <= 0 && (
           <ArrowDownLeft className="text-red-700 dark:text-red-300" />
         )}
