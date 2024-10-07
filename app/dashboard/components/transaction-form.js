@@ -6,7 +6,9 @@ import Select from "@/components/select";
 import { categories, types } from "@/lib/consts";
 
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
+import { transactionSchema } from "@/lib/validation";
 const Transactionform = () => {
   const {
     register,
@@ -15,6 +17,7 @@ const Transactionform = () => {
     formState: { errors },
   } = useForm({
     mode: "onTouched",
+    resolver: zodResolver(transactionSchema),
   });
 
   const onSubmit = (data) => {
@@ -43,13 +46,7 @@ const Transactionform = () => {
           <Label htmlFor="date" className="mb-1">
             Date
           </Label>
-          <Input
-            {...register("created_at", {
-              required: "The date is required",
-            })}
-            id="date"
-            type="date"
-          />
+          <Input {...register("created_at")} id="date" type="date" />
           {errors?.created_at && (
             <p className="mt-1 text-red-500">{errors.created_at.message}</p>
           )}
@@ -59,15 +56,7 @@ const Transactionform = () => {
             Amount{" "}
           </Label>
 
-          <Input
-            {...register("amount", {
-              required: "The amount is required",
-              valueAsNumber: true,
-              min: { value: 1, message: "Amount must be at least 1" },
-            })}
-            id="amount"
-            type="number"
-          />
+          <Input {...register("amount")} id="amount" type="number" />
           {errors?.amount && (
             <p className="mt-1 text-red-500">{errors.amount.message}</p>
           )}
@@ -77,13 +66,7 @@ const Transactionform = () => {
             Description{" "}
           </Label>
 
-          <Input
-            {...register("description", {
-              required: "Description is required",
-            })}
-            id="description"
-            type="text"
-          />
+          <Input {...register("description")} id="description" type="text" />
           {errors?.description && (
             <p className="mt-1 text-red-500">{errors.description.message}</p>
           )}

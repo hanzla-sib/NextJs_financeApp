@@ -16,7 +16,7 @@ const groupAndSumTransactionsByDate = (transactions) => {
   return grouped;
 };
 export default async function TransactionList() {
-  const response = await fetch("http://localhost:3100/transactions");
+  const response = await fetch(`${process.env.API_URL}/transactions`);
   const transactions = await response.json();
   const grouped = groupAndSumTransactionsByDate(transactions);
   return (

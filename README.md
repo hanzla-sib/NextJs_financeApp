@@ -50,3 +50,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 # forward ref
 
 # react hook form
+
+# Zod
+
+# Environment Variable
