@@ -9,7 +9,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { transactionSchema } from "@/lib/validation";
+import { useState } from "react";
+import { useRouter } from "next/router";
+import { purgeTransactionListCache } from "@/lib/action";
 const Transactionform = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -20,8 +24,26 @@ const Transactionform = () => {
     resolver: zodResolver(transactionSchema),
   });
 
-  const onSubmit = (data) => {
-    console.log(data); // handle form submission here
+  const [isSaving, setSaving] = useState(false);
+  const onSubmit = async (data) => {
+    console.log("data");
+    setSaving(true);
+    try {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/transactions`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...data,
+          created_at: `${data.created_at}T00:00:00`,
+        }),
+      });
+      await purgeTransactionListCache();
+      router.push("/dashboard");
+    } finally {
+      setSaving(false);
+    }
   };
   return (
     <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
@@ -51,7 +73,7 @@ const Transactionform = () => {
             <p className="mt-1 text-red-500">{errors.created_at.message}</p>
           )}
         </div>
-        <div>
+        {/* <div>
           <Label htmlFor="amount" className="mb-1">
             Amount{" "}
           </Label>
@@ -60,7 +82,7 @@ const Transactionform = () => {
           {errors?.amount && (
             <p className="mt-1 text-red-500">{errors.amount.message}</p>
           )}
-        </div>
+        </div> */}
         <div className="col-span-1 md:col-span-2 ">
           <Label htmlFor="description" className="mb-1">
             Description{" "}
@@ -73,7 +95,9 @@ const Transactionform = () => {
         </div>
       </div>
       <div className="flex justify-end">
-        <Button type="submit">Save</Button>
+        <Button disabled={isSaving} type="submit">
+          Save
+        </Button>
       </div>
     </form>
   );

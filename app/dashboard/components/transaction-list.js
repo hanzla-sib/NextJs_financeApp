@@ -1,6 +1,7 @@
 import Seperator from "@/components/seperator";
 import TransactionItem from "@/components/transaction-item";
 import TransactionSummaryItem from "@/components/transaction-summary-item";
+
 const groupAndSumTransactionsByDate = (transactions) => {
   const grouped = {};
   for (const trasaction of transactions) {
@@ -16,7 +17,11 @@ const groupAndSumTransactionsByDate = (transactions) => {
   return grouped;
 };
 export default async function TransactionList() {
-  const response = await fetch(`${process.env.API_URL}/transactions`);
+  const response = await fetch(`${process.env.API_URL}/transactions`,{
+    next:{
+      tags:['transaction-list']
+    }
+  });
   const transactions = await response.json();
   const grouped = groupAndSumTransactionsByDate(transactions);
   return (
