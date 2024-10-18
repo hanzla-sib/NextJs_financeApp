@@ -12,6 +12,7 @@ import { transactionSchema } from "@/lib/validation";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { purgeTransactionListCache } from "@/lib/action";
+import ErrorZod from "@/components/ErrorZod";
 const Transactionform = () => {
   const router = useRouter();
   const {
@@ -69,9 +70,8 @@ const Transactionform = () => {
             Date
           </Label>
           <Input {...register("created_at")} id="date" type="date" />
-          {errors?.created_at && (
-            <p className="mt-1 text-red-500">{errors.created_at.message}</p>
-          )}
+
+          <ErrorZod error={errors.created_at} />
         </div>
         {/* <div>
           <Label htmlFor="amount" className="mb-1">
@@ -79,9 +79,7 @@ const Transactionform = () => {
           </Label>
 
           <Input {...register("amount")} id="amount" type="number" />
-          {errors?.amount && (
-            <p className="mt-1 text-red-500">{errors.amount.message}</p>
-          )}
+          <ErrorZod error={errors.amount}/>
         </div> */}
         <div className="col-span-1 md:col-span-2 ">
           <Label htmlFor="description" className="mb-1">
@@ -89,9 +87,7 @@ const Transactionform = () => {
           </Label>
 
           <Input {...register("description")} id="description" type="text" />
-          {errors?.description && (
-            <p className="mt-1 text-red-500">{errors.description.message}</p>
-          )}
+          <ErrorZod error={errors.description} />
         </div>
       </div>
       <div className="flex justify-end">
