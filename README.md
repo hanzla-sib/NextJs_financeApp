@@ -59,4 +59,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 # REVALIDATE, REVALIDATE TAG, CACHE
 
-# Supabase
+# Supabase transactiosn and seed
+
+# dotenv
+
+# mjs file seeding

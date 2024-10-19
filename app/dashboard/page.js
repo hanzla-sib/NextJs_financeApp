@@ -10,8 +10,8 @@ import { createClient } from "@/lib/supabase/server";
 
 const page = async () => {
   const client = createClient();
+  console.log("hello", (await client.from("transactions").select("*")).data);
 
-  console.log("hello "+ (await client.from("transactions").select()).count);
   return (
     <>
       <section className="mb-8">
