@@ -10,8 +10,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { transactionSchema } from "@/lib/validation";
 import { useState } from "react";
-import { useRouter } from "next/router";
-import { purgeTransactionListCache } from "@/lib/action";
+import { useRouter } from "next/navigation";
+import { createTransaction, purgeTransactionListCache } from "@/lib/action";
 import ErrorZod from "@/components/ErrorZod";
 const Transactionform = () => {
   const router = useRouter();
@@ -24,24 +24,27 @@ const Transactionform = () => {
     mode: "onTouched",
     resolver: zodResolver(transactionSchema),
   });
-
+  const [lastError, setLastError] = useState();
   const [isSaving, setSaving] = useState(false);
   const onSubmit = async (data) => {
-    console.log("data");
     setSaving(true);
+    setLastError();
     try {
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/transactions`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...data,
-          created_at: `${data.created_at}T00:00:00`,
-        }),
-      });
-      await purgeTransactionListCache();
+      // await fetch(`${process.env.NEXT_PUBLIC_API_URL}/transactions`, {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({
+      //     ...data,
+      //     created_at: `${data.created_at}T00:00:00`,
+      //   }),
+      // });
+      // await purgeTransactionListCache();
+      await createTransaction(data);
       router.push("/dashboard");
+    } catch (e) {
+      setLastError(e);
     } finally {
       setSaving(false);
     }
@@ -73,14 +76,18 @@ const Transactionform = () => {
 
           <ErrorZod error={errors.created_at} />
         </div>
-        {/* <div>
+        <div>
           <Label htmlFor="amount" className="mb-1">
             Amount{" "}
           </Label>
 
-          <Input {...register("amount")} id="amount" type="number" />
-          <ErrorZod error={errors.amount}/>
-        </div> */}
+          <Input
+            {...register("amount", { valueAsNumber: true })}
+            id="amount"
+            type="number"
+          />
+          <ErrorZod error={errors.amount} />
+        </div>
         <div className="col-span-1 md:col-span-2 ">
           <Label htmlFor="description" className="mb-1">
             Description{" "}
@@ -90,6 +97,7 @@ const Transactionform = () => {
           <ErrorZod error={errors.description} />
         </div>
       </div>
+      <div>{lastError && <ErrorZod error={lastError} />}</div>
       <div className="flex justify-end">
         <Button disabled={isSaving} type="submit">
           Save

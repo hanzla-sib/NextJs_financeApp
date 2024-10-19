@@ -7,10 +7,11 @@ import Link from "next/link";
 import { PlusCircle } from "lucide-react";
 import { sizes, variants } from "@/lib/variants";
 import { createClient } from "@/lib/supabase/server";
-
+import { ErrorBoundary } from "react-error-boundary";
+import { types } from "@/lib/consts";
 const page = async () => {
   const client = createClient();
-  console.log("hello", (await client.from("transactions").select("*")).data);
+  // console.log("hello", (await client.from("transactions").select("*")).data);
 
   return (
     <>
@@ -18,10 +19,19 @@ const page = async () => {
         <h1 className="text-4xl font-semibold">Summary</h1>
       </section>
       <section className="mb-8 grid grid-cols-2 lg:grid-cols-4 gap-8">
-        <Suspense fallback={<TrendFallback />}>
-          <Trend type={"Income"} />
-        </Suspense>
-        <Suspense fallback={<TrendFallback />}>
+        {types?.map((data, id) => (
+          <ErrorBoundary
+            fallback={
+              <div className="text-red-500">Cannot fetch trends data</div>
+            }
+          >
+            <Suspense fallback={<TrendFallback />}>
+              <Trend type={data} />
+            </Suspense>
+          </ErrorBoundary>
+        ))}
+
+        {/* <Suspense fallback={<TrendFallback />}>
           <Trend type={"Expense"} />
         </Suspense>
         <Suspense fallback={<TrendFallback />}>
@@ -29,7 +39,7 @@ const page = async () => {
         </Suspense>
         <Suspense fallback={<TrendFallback />}>
           <Trend type={"Investment"} />
-        </Suspense>
+        </Suspense> */}
       </section>
       <section className="flex justify-between items-center mb-8">
         <h2 className="text-2xl">Transactions</h2>
