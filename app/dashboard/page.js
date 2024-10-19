@@ -6,8 +6,12 @@ import TrendFallback from "./components/trendFallback";
 import Link from "next/link";
 import { PlusCircle } from "lucide-react";
 import { sizes, variants } from "@/lib/variants";
+import { createClient } from "@/lib/supabase/server";
 
-const page = () => {
+const page = async () => {
+  const client = createClient();
+
+  console.log("hello "+ (await client.from("transactions").select()).count);
   return (
     <>
       <section className="mb-8">

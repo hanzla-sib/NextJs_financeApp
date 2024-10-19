@@ -58,3 +58,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 # Server Actions
 
 # REVALIDATE, REVALIDATE TAG, CACHE
+
+# Supabase
