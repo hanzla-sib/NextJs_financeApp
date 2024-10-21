@@ -60,3 +60,5 @@ pnpm dev
 # mjs file seeding
 
 # React Error Boundry
+
+# RPC (Remote Procedural calls)
