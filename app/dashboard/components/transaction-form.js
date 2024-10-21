@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { transactionSchema } from "@/lib/validation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createTransaction, purgeTransactionListCache } from "@/lib/action";
 import ErrorZod from "@/components/ErrorZod";
@@ -19,13 +19,16 @@ const Transactionform = () => {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm({
     mode: "onTouched",
     resolver: zodResolver(transactionSchema),
   });
+  const type = watch("type");
   const [lastError, setLastError] = useState();
   const [isSaving, setSaving] = useState(false);
+
   const onSubmit = async (data) => {
     setSaving(true);
     setLastError();
@@ -49,12 +52,21 @@ const Transactionform = () => {
       setSaving(false);
     }
   };
+
   return (
     <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
         <div>
           <Label className="mb-1">Type</Label>
-          <Select {...register("type")}>
+          <Select
+            {...register("type", {
+              onChange: (e) => {
+                if (e.target.value !== "Expense") {
+                  setValue("category", undefined);
+                }
+              },
+            })}
+          >
             {types.map((data, key) => (
               <option key={key}>{data}</option>
             ))}
@@ -62,7 +74,8 @@ const Transactionform = () => {
         </div>
         <div>
           <Label className="mb-1">Category</Label>
-          <Select {...register("category")}>
+          <Select disabled={type !== "Expense"} {...register("category")}>
+            <option value="">Select a category</option>
             {categories.map((data, key) => (
               <option key={key}>{data}</option>
             ))}

@@ -22,7 +22,7 @@ const page = async () => {
         {types?.map((data, id) => (
           <ErrorBoundary
             fallback={
-              <div className="text-red-500">Cannot fetch trends data</div>
+              <div className="text-red-500">Cannot fetch Income trends data</div>
             }
           >
             <Suspense fallback={<TrendFallback />}>

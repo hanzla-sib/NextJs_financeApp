@@ -1,8 +1,24 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Finance Management App
+
+## Introduction
+
+This project is a financial management application built with [Next.js](https://nextjs.org/). It allows users to manage their financial transactions, view summaries, and analyze trends. The application leverages various modern web technologies and libraries to provide a seamless user experience.
+
+## Features
+
+1. **Transaction Management**: Users can create, view, and manage their financial transactions.
+2. **Dashboard**: A comprehensive dashboard that displays transaction summaries and trends.
+3. **Dark Mode**: Support for dark mode to enhance user experience.
+4. **Form Handling**: Efficient form handling using `react-hook-form` and validation with `Zod`.
+5. **Loading Skeletons**: Visual feedback during data loading using skeleton components.
+6. **Server-Side Actions**: Server-side actions for data manipulation and caching.
+7. **Database Seeding**: Automated database seeding for initial setup and testing.
 
 ## Getting Started
 
-First, run the development server:
+### Development Server
+
+To start the development server, you can use one of the following commands:
 
 ```bash
 npm run dev
@@ -10,30 +26,8 @@ npm run dev
 yarn dev
 # or
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
 # things used
 
