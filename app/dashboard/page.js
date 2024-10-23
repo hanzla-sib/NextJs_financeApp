@@ -9,20 +9,27 @@ import { sizes, variants } from "@/lib/variants";
 import { createClient } from "@/lib/supabase/server";
 import { ErrorBoundary } from "react-error-boundary";
 import { types } from "@/lib/consts";
+import Range from "./components/range";
 const page = async () => {
   const client = createClient();
   // console.log("hello", (await client.from("transactions").select("*")).data);
 
   return (
     <>
-      <section className="mb-8">
+      <section className="mb-8 flex justify-between items-center">
         <h1 className="text-4xl font-semibold">Summary</h1>
+        <aside>
+          <Range />
+        </aside>
       </section>
       <section className="mb-8 grid grid-cols-2 lg:grid-cols-4 gap-8">
         {types?.map((data, id) => (
           <ErrorBoundary
+            key={id}
             fallback={
-              <div className="text-red-500">Cannot fetch Income trends data</div>
+              <div className="text-red-500">
+                Cannot fetch Income trends data
+              </div>
             }
           >
             <Suspense fallback={<TrendFallback />}>
