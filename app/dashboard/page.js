@@ -10,6 +10,7 @@ import { createClient } from "@/lib/supabase/server";
 import { ErrorBoundary } from "react-error-boundary";
 import { types } from "@/lib/consts";
 import Range from "./components/range";
+import { Transactionlistwrapper } from "./components/transaction-list-wrapper";
 const page = async ({ searchParams }) => {
   const client = createClient();
   // console.log("hello", (await client.from("transactions").select("*")).data);
@@ -59,7 +60,7 @@ const page = async ({ searchParams }) => {
         </Link>
       </section>
       <Suspense fallback={<TransactionListFallback />}>
-        <TransactionList range={range} />
+        <Transactionlistwrapper range={range} />
       </Suspense>
     </div>
   );
