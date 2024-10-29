@@ -2,8 +2,16 @@ import { useFormatCurrency } from "@/hooks/use-format-currency";
 import { HandCoins, Landmark, PiggyBank, Wallet } from "lucide-react";
 import React from "react";
 import { twMerge } from "tailwind-merge";
+import { TransactionItemRemoveButton } from "./transaction-item-remove-button";
 
-const TransactionItem = ({ type, category, description, amount }) => {
+const TransactionItem = ({
+  id,
+  type,
+  category,
+  description,
+  amount,
+  onRemoved,
+}) => {
   const formatedamount = useFormatCurrency(amount);
   const typesmap = {
     Income: {
@@ -41,7 +49,9 @@ const TransactionItem = ({ type, category, description, amount }) => {
         )}
       </div>
       <div className="min-w-[70px] text-right">{formatedamount}</div>
-      <div className="min-w-[50px] flex justify-end">...</div>
+      <div className="min-w-[100px] flex justify-end">
+        <TransactionItemRemoveButton onRemoved={onRemoved} id={id} />
+      </div>
     </div>
   );
 };
