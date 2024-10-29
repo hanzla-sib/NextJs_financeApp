@@ -3,5 +3,11 @@ import TransactionList from "./transaction-list";
 
 export async function Transactionlistwrapper({ range }) {
   const transactions = await fetchTransactions(range);
-  return <TransactionList initialTransactions={transactions} />;
+  return (
+    <TransactionList
+      key={range}
+      initialTransactions={transactions}
+      renge={range}
+    />
+  );
 }
