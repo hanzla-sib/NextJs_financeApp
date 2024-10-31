@@ -1,8 +1,10 @@
 import { useFormatCurrency } from "@/hooks/use-format-currency";
-import { HandCoins, Landmark, PiggyBank, Wallet } from "lucide-react";
+import { HandCoins, Landmark, Pencil, PiggyBank, Wallet } from "lucide-react";
 import React from "react";
 import { twMerge } from "tailwind-merge";
 import { TransactionItemRemoveButton } from "./transaction-item-remove-button";
+import Link from "next/link";
+import { sizes, variants } from "@/lib/variants";
 
 const TransactionItem = ({
   id,
@@ -49,7 +51,14 @@ const TransactionItem = ({
         )}
       </div>
       <div className="min-w-[70px] text-right">{formatedamount}</div>
-      <div className="min-w-[100px] flex justify-end">
+
+      <div className="min-w-[100px] flex justify-end space-x-1">
+        <Link
+          href={`/dashboard/transaction/${id}/edit`}
+          className={`${variants["ghost"]} ${sizes["xs"]}`}
+        >
+          <Pencil className="w-4 h-4" />
+        </Link>
         <TransactionItemRemoveButton onRemoved={onRemoved} id={id} />
       </div>
     </div>

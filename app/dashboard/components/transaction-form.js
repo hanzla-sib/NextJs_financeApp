@@ -11,9 +11,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { transactionSchema } from "@/lib/validation";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { createTransaction, purgeTransactionListCache } from "@/lib/action";
+import {
+  createTransaction,
+  purgeTransactionListCache,
+  UpdateTransaction,
+} from "@/lib/action";
 import ErrorZod from "@/components/ErrorZod";
-const Transactionform = () => {
+const Transactionform = ({ initialData }) => {
   const router = useRouter();
   const {
     register,
@@ -24,12 +28,25 @@ const Transactionform = () => {
   } = useForm({
     mode: "onTouched",
     resolver: zodResolver(transactionSchema),
+    defaultValues: initialData ?? {
+      created_at: new Date().toISOString().split("T")[0],
+    },
   });
+  useEffect(() => {
+    if (initialData) {
+      setValue(
+        "created_at",
+        new Date(initialData.created_at).toISOString().split("T")[0]
+      );
+    }
+  }, [initialData]);
+
   const type = watch("type");
   const [lastError, setLastError] = useState();
   const [isSaving, setSaving] = useState(false);
-
+  const editing = Boolean(initialData);
   const onSubmit = async (data) => {
+
     setSaving(true);
     setLastError();
     try {
@@ -44,7 +61,13 @@ const Transactionform = () => {
       //   }),
       // });
       // await purgeTransactionListCache();
-      await createTransaction(data);
+      if (editing) {
+      
+        await UpdateTransaction(initialData.id, data);
+      } else {
+        await createTransaction(data);
+      }
+
       router.push("/dashboard");
     } catch (e) {
       setLastError(e);
@@ -85,7 +108,12 @@ const Transactionform = () => {
           <Label htmlFor="date" className="mb-1">
             Date
           </Label>
-          <Input {...register("created_at")} id="date" type="date" />
+          <Input
+            {...register("created_at")}
+            id="date"
+            type="date"
+            disabled={editing}
+          />
 
           <ErrorZod error={errors.created_at} />
         </div>

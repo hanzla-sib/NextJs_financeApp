@@ -14,7 +14,7 @@ export default function TransactionList({ initialTransactions }) {
   // Group and sum transactions by date
   const [loading, setLoading] = useState(false);
   const [transactions, setTransactions] = useState(initialTransactions);
-  const [offset, setOffset] = useState(initialTransactions.length);
+
   const grouped = groupAndSumTransactionsByDate(transactions);
   const [buttonHidden, setButtonHidden] = useState(
     initialTransactions.length === 0
@@ -24,10 +24,13 @@ export default function TransactionList({ initialTransactions }) {
     setLoading(true);
     let nextTransactions = null;
     try {
-      nextTransactions = await fetchTransactions("last12months", offset, 10);
+      nextTransactions = await fetchTransactions(
+        "last12months",
+        transactions.length,
+        10
+      );
       setButtonHidden(nextTransactions.length === 0);
 
-      setOffset((prev) => prev + 10);
       setTransactions((prevTransactions) => [
         ...prevTransactions,
         ...nextTransactions,
