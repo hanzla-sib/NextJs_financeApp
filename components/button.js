@@ -7,7 +7,8 @@ export default function Button(props) {
       {...props}
       className={twMerge(
         props.variant ? variants[props.variant] : variants["default"],
-        props.size ? sizes[props.size] : sizes["base"]
+        props.size ? sizes[props.size] : sizes["base"],
+        props.className
       )}
     ></button>
   );

@@ -1,3 +1,5 @@
+import LoginForm from "./components/login-form";
+
 export default function Page() {
   return (
     <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px] py-40">
@@ -8,7 +10,7 @@ export default function Page() {
           required
         </p>
       </div>
-      <div>Form goes here...</div>
+      <LoginForm />
     </div>
   );
 }
