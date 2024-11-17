@@ -15,6 +15,8 @@ const page = async ({ searchParams }) => {
   const client = createClient();
   // console.log("hello", (await client.from("transactions").select("*")).data);
   const range = searchParams?.range ?? "last12months";
+  const supabase = createClient();
+  console.log("hello", await supabase.auth.getUser());
   return (
     <div className="space-y-8">
       <section className=" flex justify-between items-center">
